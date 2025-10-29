@@ -54,13 +54,13 @@ export const ContactSection = () => {
         </p>
 
         {/* first card contact info */}
-        <div className="relative bg-gradient-to-tr from-teal-800 via-teal-900 to-teal-400 p-8 rounded-lg shadow-md mb-16 max-w-3xl mx-auto overflow-hidden">
+        <div className="relative bg-gradient-to-tr from-teal-800 via-teal-900 to-teal-400 p-6 md:p-8 rounded-lg shadow-md mb-16 w-full sm:w-[90%] md:max-w-3xl mx-auto overflow-hidden border-white/20 card-hover">
           {/* Background glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0)_70%)]"></div>
 
           <div className="relative z-10">
-            <h3 className="text-2xl font-semibold mb-6 text-center text-white">
-              Let’s turn your concept into a masterpiece!
+            <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-white">
+              Let's turn your concept into a masterpiece!
             </h3>
 
             {/* Contact Form */}
@@ -83,7 +83,7 @@ export const ContactSection = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-1"
+                  className="w-full px-5 py-4 md:px-4 md:py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-1"
                   placeholder="Enter your name"
                   required
                 />
@@ -95,7 +95,7 @@ export const ContactSection = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-2"
+                  className="w-full px-5 py-4 md:px-4 md:py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-2"
                   placeholder="Enter your email"
                   required
                 />
@@ -108,7 +108,7 @@ export const ContactSection = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, message: e.target.value })
                 }
-                className="w-full h-40 px-4 py-3 rounded-md border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none animate-fade-in-delay-3"
+                className="w-full h-44 md:h-40 px-5 py-4 md:px-4 md:py-3 rounded-md border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none animate-fade-in-delay-3"
                 placeholder="Write your message..."
                 required
               />
@@ -117,7 +117,7 @@ export const ContactSection = () => {
                 type="submit"
                 disabled={isSending}
                 className={cn(
-                  "normal-button w-full flex items-center justify-center gap-2 disabled:opacity-70 bg-white/20 hover:bg-white/30 text-white transition animate-fade-in-delay-4"
+                  "normal-button w-full flex items-center justify-center gap-2 disabled:opacity-70 bg-white/20 hover:bg-white/30 text-white transition animate-fade-in-delay-4 py-4 md:py-3"
                 )}
               >
                 {isSending ? "Sending..." : "Send Message"}

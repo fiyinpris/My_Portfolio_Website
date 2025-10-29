@@ -10,16 +10,17 @@ export const AboutSection = () => {
           About <span className="text-primary">Me</span>
         </h2>
       </div>
+
       <div className="flex flex-col md:flex-row items-center justify-center text-center md:text-left ">
         <div className="flex justify-center md:w-1/2 mt-6 md:mt-0">
           <img
             src={myImage}
             alt="Fiyinfoluwa"
-            className="w-48 h-48 sm:w-60 sm:h-60 md:w-80  md:h-80 object-cover rounded-full shadow-lg animate-fade-in-delay-1"
+            className="w-80 h-80 sm:w-60 sm:h-60 md:w-80  md:h-80 object-cover rounded-full shadow-lg animate-fade-in-delay-1"
           />
         </div>
         <div className="space-y-6 max-w-xl mt-6">
-          <div className="space-y-6 ">
+          <div className="space-y-8 ">
             <div className="grid grid-cols-1 gap-6">
               <div className="gradient-border card-hover">
                 <div className="flex items-start gap-4 animate-fade-in-delay-2">
@@ -63,13 +64,13 @@ export const AboutSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center animate-fade-in-delay-4">
-              <a href="#contact" className="normal-button">
+              <a href="#contacts" className="normal-button">
                 Get in touch
               </a>
               <a
                 href="/cv/my-resume.pdf"
                 download="Olaleke-Fiyinfoluwa-CV.pdf"
-                className="px-6 py-2 border rounded-full border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
+                className="px-6 py-2 border rounded-full border-primary text-primary hover:bg-primary/30 transition-colors duration-300 card-hover"
               >
                 Download CV
               </a>
@@ -77,6 +78,8 @@ export const AboutSection = () => {
           </div>
         </div>
       </div>
+
+      
     </section>
   );
 };

@@ -63,8 +63,8 @@ const ProjectCarousel = ({ images }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className="absolute transition-all duration-700 ease-out cursor-pointer mb-10
-               w-[85%] sm:w-[400px] md:w-[450px] max-w-full"
+            className="absolute transition-all duration-700 ease-out cursor-pointer mb-12
+               w-full sm:w-[450px] md:w-[450px] max-w-full"
             style={getImageStyle(index)}
             onClick={() => setCurrentImageIndex(index)}
           >
@@ -82,7 +82,7 @@ const ProjectCarousel = ({ images }) => {
         <>
           <button
             onClick={prevImage}
-            className="absolute left-4 top-1/2 -translate-y-1/2 
+            className="absolute left-5 top-1/2 -translate-y-1/2 
              bg-white/40 dark:bg-white/15 backdrop-blur-md 
              text-foreground p-2 rounded-full 
              hover:bg-white/60 dark:hover:bg-white/25 
@@ -95,7 +95,7 @@ const ProjectCarousel = ({ images }) => {
 
           <button
             onClick={nextImage}
-            className="absolute right-4 top-1/2 -translate-y-1/2 
+            className="absolute right-5 top-1/2 -translate-y-1/2 
              bg-white/40 dark:bg-white/15 backdrop-blur-md 
              text-foreground p-2 rounded-full 
              hover:bg-white/60 dark:hover:bg-white/25 
