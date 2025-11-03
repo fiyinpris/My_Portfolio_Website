@@ -14,7 +14,7 @@ export const HeroSection = () => {
               {" "}
               Pris
             </span>
-            <span className=" opacity-0 animate-fade-in-delay-2">cilla</span>
+            <span className=" opacity-0 animate-fade-in-delay-2 ">cilla</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-2xl mx-auto opacity-0 animate-fade-in-delay-3 max-w-2xl">
             I'm a React enthusiast passionate about creating responsive,

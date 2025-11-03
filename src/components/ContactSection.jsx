@@ -42,8 +42,8 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contacts" className="py-24 px-4 relative bg-secondary">
-      <div className="container mx-auto max-w-3xl text-center">
+    <section id="contacts" className="py-24  relative bg-secondary">
+      <div className="mx-auto max-w-3xl text-center">
         {/* Title */}
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Get In <span className="text-primary">Touch</span>
@@ -54,7 +54,7 @@ export const ContactSection = () => {
         </p>
 
         {/* first card contact info */}
-        <div className="relative bg-gradient-to-tr from-teal-800 via-teal-900 to-teal-400 p-6 md:p-8 rounded-lg shadow-md mb-16 w-full sm:w-[90%] md:max-w-3xl mx-auto overflow-hidden border-white/20 card-hover">
+        <div className="relative bg-gradient-to-tr from-teal-800 via-teal-900 to-teal-400 p-6 md:p-8 rounded-lg shadow-md mb-16 w-full sm:w-[90%] md:max-w-3xl mx-auto overflow-hidden border-0  md:border md:border-white/20 card-hover">
           {/* Background glow */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0)_70%)]"></div>
 
