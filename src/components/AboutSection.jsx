@@ -1,6 +1,6 @@
 import React from "react";
 import { BrickWall, Code } from "lucide-react";
-import myImage from "../images/fiyin2.jpeg";
+import myImage from "../images/fiyin3.jpeg";
 
 export const AboutSection = () => {
   return (
