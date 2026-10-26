@@ -117,44 +117,44 @@ export const experience = [
       title: "Classify — capstone clothing website",
       summary:
         "Led the team capstone project, building engaging interfaces with Tailwind CSS and JavaScript interactivity.",
-      href: "#projects",
+      href: "https://capstone-project-eta-one.vercel.app",
     },
   },
 ];
 
+// Tech lists come from each project's repository (package.json and imports)
 export const projects = [
   {
-    title: "Classify",
+    title: "Declutt",
+    category: "Marketplace",
+    status: "Live",
+    image: "/projects/declutt.webp",
+    description:
+      "A marketplace for buying and selling pre-loved items, giving clutter a second life. It has listings with search, product pages, a cart, buyer and seller dashboards, an admin panel and in-app chat, all backed by Firebase authentication and a Firestore database.",
+    tech: ["React", "Vite", "Tailwind CSS", "Firebase", "React Router"],
+    liveUrl: "https://declutt.vercel.app",
+    codeUrl: "https://github.com/fiyinpris/Declutt",
+  },
+  {
+    title: "Saomi",
+    category: "Brand website",
+    status: "Live",
+    image: "/projects/saomi.webp",
+    description:
+      "A luxury fragrance house website for Liquid Gold eau de parfum. A cinematic video hero, scent families and a collection showcase, hand-built without a framework and animated on scroll with vanilla JavaScript.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    liveUrl: "https://saomi-rho.vercel.app",
+    codeUrl: "https://github.com/fiyinpris/Saomi",
+  },
+  {
+    title: "my.LIGHTSTORE",
     category: "E-commerce",
     status: "Live",
-    image: "/projects/Project 1.jpg",
+    image: "/projects/my-lightstore.webp",
     description:
-      "A clothing store website built as a team capstone project. It showcases new arrivals and seasonal collections for men and women, with responsive layouts styled in Tailwind CSS and JavaScript for interactivity.",
-    tech: ["HTML", "Tailwind CSS", "JavaScript"],
-    liveUrl: "https://capstone-project-eta-one.vercel.app",
-    codeUrl: "https://github.com/fiyinpris/capstone-project",
-  },
-  {
-    title: "Pickle Playground",
-    category: "EdTech",
-    status: "Live",
-    image: "/projects/Project 2.jpg",
-    description:
-      "A coding playground website for kids, parents and educators. Beyond the landing page it includes sign-in, password reset, dashboard and create pages.",
-    tech: ["HTML", "CSS", "Tailwind CSS"],
-    liveUrl: "https://hackcity-repo.vercel.app",
-    codeUrl: "https://github.com/fiyinpris/PICKLE-PLAYGROUND",
-  },
-  {
-    title: "Burger Restaurant Landing Page",
-    category: "Landing page",
-    status: null,
-    image: "/projects/Project 3.jpg",
-    description:
-      "A restaurant landing page for a burger brand, with bold headlines, alternating image-and-text feature sections and a theme toggle in the navigation.",
-    tech: ["HTML", "CSS"],
-    // Add the live site and repository links here once they are public
-    liveUrl: null,
-    codeUrl: null,
+      "An online store for studio and content-creator lighting. Shoppers can browse and search products, save a wishlist, sign in with Google and check out with Paystack, with the catalogue stored in Firestore.",
+    tech: ["React", "Vite", "Tailwind CSS", "Firebase", "Paystack", "EmailJS"],
+    liveUrl: "https://my-website-chi-sage.vercel.app",
+    codeUrl: "https://github.com/fiyinpris/MY-WEBSITE",
   },
 ];
