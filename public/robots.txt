@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://my-portfolio-website-lemon-rho.vercel.app/sitemap.xml
+Sitemap: https://fiyin-dev.vercel.app/sitemap.xml
