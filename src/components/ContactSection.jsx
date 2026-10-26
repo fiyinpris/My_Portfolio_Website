@@ -1,15 +1,25 @@
 import { useState } from "react";
 import {
-  Instagram,
-  Linkedin,
+  Check,
+  CircleAlert,
+  CircleCheck,
+  Copy,
+  LoaderCircle,
   Mail,
   MapPin,
   Phone,
   Send,
-  Twitter,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { profile, socials } from "../data/portfolio";
 import { cn } from "../lib/utilis";
+import { Reveal } from "./Reveal";
+import { SectionHeading } from "./SectionHeading";
+
+const statusMessages = {
+  success: "Message sent successfully! I'll get back to you soon.",
+  error: "Something went wrong. Please try again later.",
+};
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -17,11 +27,19 @@ export const ContactSection = () => {
     email: "",
     message: "",
   });
-  const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [isCopied, setIsCopied] = useState(false);
+
+  const isSending = status === "sending";
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (status !== "idle" && status !== "sending") setStatus("idle");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSending(true);
+    setStatus("sending");
 
     emailjs
       .sendForm(
@@ -31,171 +49,221 @@ export const ContactSection = () => {
         import.meta.env.VITE_PUBLIC_KEY
       )
       .then(() => {
-        alert("Message sent successfully!");
+        setStatus("success");
         setFormData({ name: "", email: "", message: "" });
       })
       .catch((error) => {
         console.error("EmailJS Error:", error);
-        alert("Something went wrong. Please try again later.");
-      })
-      .finally(() => setIsSending(false));
+        setStatus("error");
+      });
   };
 
+  const copyEmail = () => {
+    navigator.clipboard
+      ?.writeText(profile.email)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch(() => {});
+  };
+
+  const contactMethods = [
+    { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+    { icon: Phone, label: "Phone", value: profile.phone, href: profile.phoneHref },
+    { icon: MapPin, label: "Location", value: profile.location },
+  ];
+
   return (
-    <section id="contacts" className="py-24  relative bg-secondary">
-      <div className="mx-auto max-w-3xl text-center">
-        {/* Title */}
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Get In <span className="text-primary">Touch</span>
-        </h2>
-        <p className="text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Interested in collaborating or starting a new project? Don’t hesitate
-          to reach out, I'm always excited to discuss new opportunities.
-        </p>
+    <section id="contacts" className="relative py-24 md:py-32">
+      <div className="shell">
+        <div className="card relative overflow-hidden">
+          <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-0 opacity-70" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-32 -top-40 h-[30rem] w-[30rem]"
+            style={{
+              background:
+                "radial-gradient(closest-side, hsl(var(--primary) / 0.18), transparent)",
+            }}
+          />
 
-        {/* first card contact info */}
-        <div className="relative bg-gradient-to-tr from-teal-800 via-teal-900 to-teal-400 p-6 md:p-8 rounded-lg shadow-md mb-16 w-full sm:w-[90%] md:max-w-3xl mx-auto overflow-hidden border-0  md:border md:border-white/20 card-hover">
-          {/* Background glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,rgba(0,0,0,0)_70%)]"></div>
+          <div className="relative grid grid-cols-1 gap-12 p-5 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14">
+            {/* Contact Information */}
+            <div className="min-w-0">
+              <SectionHeading
+                index="05"
+                label="Contact"
+                title="Let's turn your concept into a masterpiece!"
+                description="Interested in collaborating or starting a new project? Don't hesitate to reach out, I'm always excited to discuss new opportunities."
+              />
 
-          <div className="relative z-10">
-            <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-white">
-              Let's turn your concept into a masterpiece!
-            </h3>
+              <Reveal delay={100}>
+                <ul className="mt-10 space-y-3">
+                  {contactMethods.map(({ icon: Icon, label, value, href }) => (
+                    <li
+                      key={label}
+                      className="flex items-center gap-4 rounded-2xl border border-border bg-background/50 p-3 pr-4"
+                    >
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+                          {label}
+                        </span>
+                        {href ? (
+                          <a
+                            href={href}
+                            className="block truncate font-medium transition-colors hover:text-primary"
+                          >
+                            {value}
+                          </a>
+                        ) : (
+                          <span className="block font-medium">{value}</span>
+                        )}
+                      </span>
+                      {label === "Email" && (
+                        <button
+                          type="button"
+                          onClick={copyEmail}
+                          className="icon-btn h-9 w-9 shrink-0"
+                          aria-label={isCopied ? "Email address copied" : "Copy email address"}
+                        >
+                          {isCopied ? (
+                            <Check className="h-4 w-4 text-primary" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </button>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Social Links */}
+                <div className="mt-8 flex items-center gap-3">
+                  {socials.map(({ name, href, icon: Icon }) => (
+                    <a
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="icon-btn"
+                      aria-label={name}
+                    >
+                      <Icon className="h-[18px] w-[18px]" />
+                    </a>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
 
             {/* Contact Form */}
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              {/* For Hidden fields for EmailJS for sending mails */}
-              <input type="hidden" name="to_name" value="Fiyinfoluwa" />
-              <input
-                type="hidden"
-                name="time"
-                value={new Date().toLocaleString()}
-              />
-
-              {/* Main forms*/}
-              <div className="flex flex-col md:flex-row items-center gap-6">
+            <Reveal delay={150} className="min-w-0">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 rounded-[1.25rem] border border-border bg-background/70 p-5 shadow-xl shadow-black/5 backdrop-blur sm:p-8"
+              >
+                {/* Hidden fields used by the EmailJS template */}
+                <input type="hidden" name="to_name" value="Fiyinfoluwa" />
                 <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-5 py-4 md:px-4 md:py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-1"
-                  placeholder="Enter your name"
-                  required
+                  type="hidden"
+                  name="time"
+                  value={new Date().toLocaleString()}
                 />
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-5 py-4 md:px-4 md:py-3 rounded-full border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 animate-fade-in-delay-2"
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
 
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className="w-full h-44 md:h-40 px-5 py-4 md:px-4 md:py-3 rounded-md border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-teal-300 resize-none animate-fade-in-delay-3"
-                placeholder="Write your message..."
-                required
-              />
+                <div>
+                  <p className="text-xl font-semibold tracking-tight">Send a message</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    All fields are required.
+                  </p>
+                </div>
 
-              <button
-                type="submit"
-                disabled={isSending}
-                className={cn(
-                  "normal-button w-full flex items-center justify-center gap-2 disabled:opacity-70 bg-white/20 hover:bg-white/30 text-white transition animate-fade-in-delay-4 py-4 md:py-3"
-                )}
-              >
-                {isSending ? "Sending..." : "Send Message"}
-                {!isSending && <Send size={16} />}
-              </button>
-            </form>
-          </div>
-        </div>
-        {/* End of my main form*/}
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="mb-2 block text-sm font-medium">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      autoComplete="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="field"
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="mb-2 block text-sm font-medium">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="field"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                </div>
 
-        {/* Contact Information Section */}
-        <div className="space-y-10 text-center">
-          <h3 className="text-2xl font-semibold text-foreground">
-            Contact Information
-          </h3>
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-sm font-medium">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="field resize-y min-h-36"
+                    placeholder="Write your message..."
+                    required
+                  />
+                </div>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-            {/* Contact Details */}
-            <div className="space-y-5">
-              <div className="flex items-center justify-center space-x-3">
-                <Mail className="h-5 w-5 text-primary" />
-                <a
-                  href="mailto:fiyinolaleke@gmail.com"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="btn btn-primary w-full"
                 >
-                  fiyinolaleke@gmail.com
-                </a>
-              </div>
+                  {isSending ? (
+                    <>
+                      <LoaderCircle className="h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="btn-arrow h-4 w-4" />
+                    </>
+                  )}
+                </button>
 
-              <div className="flex items-center justify-center space-x-3">
-                <Phone className="h-5 w-5 text-primary" />
-                <a
-                  href="tel:+2348135424926"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className={cn(
+                    "flex items-center gap-2 text-sm",
+                    status === "success" && "text-primary",
+                    status === "error" && "text-red-500"
+                  )}
                 >
-                  +234 813 5424 926
-                </a>
-              </div>
-
-              <div className="flex items-center justify-center space-x-3">
-                <MapPin className="h-5 w-5 text-primary" />
-                <p className="text-muted-foreground">Nigeria</p>
-              </div>
-            </div>
-
-            {/* Divider for large screens */}
-            <div className="hidden md:block h-20 w-px bg-muted-foreground/20" />
-
-            {/* Social Links */}
-            <div className="flex justify-center space-x-6">
-              <a
-                href="https://www.linkedin.com/in/olaleke-fiyin-453528291"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-transform transform hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={22} />
-              </a>
-              <a
-                href="https://www.instagram.com/_f_pris"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-transform transform hover:scale-110"
-                aria-label="Instagram"
-              >
-                <Instagram size={22} />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-transform transform hover:scale-110"
-                aria-label="Twitter"
-              >
-                <Twitter size={22} />
-              </a>
-            </div>
+                  {status === "success" && <CircleCheck className="h-4 w-4 shrink-0" />}
+                  {status === "error" && <CircleAlert className="h-4 w-4 shrink-0" />}
+                  {statusMessages[status]}
+                </p>
+              </form>
+            </Reveal>
           </div>
         </div>
       </div>

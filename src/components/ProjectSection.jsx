@@ -1,158 +1,164 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
+import { projects } from "../data/portfolio";
+import { cn } from "../lib/utilis";
+import { Reveal } from "./Reveal";
+import { SectionHeading } from "./SectionHeading";
+import { SpotlightCard } from "./SpotlightCard";
 
-const ProjectCarousel = ({ images }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const getImageStyle = (index) => {
-    const diff = index - currentImageIndex;
-    const totalImages = images.length;
-
-    // Normalize difference to handle wrapping
-    let position = diff;
-    if (Math.abs(diff) > totalImages / 2) {
-      position = diff > 0 ? diff - totalImages : diff + totalImages;
-    }
-
-    if (position === 0) {
-      // Center image
-      return {
-        transform: "translateX(0%) scale(1) rotateY(0deg)",
-        zIndex: 30,
-        opacity: 1,
-      };
-    } else if (position === 1) {
-      // Right image
-      return {
-        transform: "translateX(40%) scale(0.8) rotateY(-25deg)",
-        zIndex: 20,
-        opacity: 0.7,
-      };
-    } else if (position === -1) {
-      // Left image
-      return {
-        transform: "translateX(-40%) scale(0.8) rotateY(25deg)",
-        zIndex: 20,
-        opacity: 0.7,
-      };
-    } else {
-      // Hidden images
-      return {
-        transform: `translateX(${position > 0 ? 100 : -100}%) scale(0.5)`,
-        zIndex: 10,
-        opacity: 0,
-      };
-    }
-  };
+// Screenshot inside a minimal browser window
+const ProjectPreview = ({ project }) => {
+  const host = project.liveUrl ? new URL(project.liveUrl).host : "preview";
+  const Wrapper = project.liveUrl ? "a" : "div";
+  const linkProps = project.liveUrl
+    ? {
+        href: project.liveUrl,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        tabIndex: -1,
+        "aria-hidden": "true",
+      }
+    : {};
 
   return (
-    <div className="relative w-full h-100 overflow-hidden ">
-      <div
-        className="absolute inset-0 flex items-center justify-center"
-        style={{ perspective: "1000px" }}
-      >
-        {/* Images with 3D effect */}
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className="absolute transition-all duration-700 ease-out cursor-pointer mb-12
-               w-full sm:w-[450px] md:w-[450px] max-w-full"
-            style={getImageStyle(index)}
-            onClick={() => setCurrentImageIndex(index)}
-          >
-            <img
-              src={image}
-              alt={`Project ${index + 1}`}
-              className="w-full h-auto object-contain rounded-lg shadow-2xl"
-            />
-          </div>
-        ))}
+    <Wrapper
+      {...linkProps}
+      className="block overflow-hidden rounded-2xl border border-border bg-muted/60"
+    >
+      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+        <span aria-hidden="true" className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+        </span>
+        <span className="mx-auto min-w-0 max-w-[70%] truncate rounded-full bg-background/70 px-3 py-1 font-mono text-[0.68rem] text-muted-foreground">
+          {host}
+        </span>
+        <span aria-hidden="true" className="w-[42px]" />
       </div>
-
-      {/* My Navigation Arrows/ */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={prevImage}
-            className="absolute left-5 top-1/2 -translate-y-1/2 
-             bg-white/40 dark:bg-white/15 backdrop-blur-md 
-             text-foreground p-2 rounded-full 
-             hover:bg-white/60 dark:hover:bg-white/25 
-             hover:scale-110 transition-all duration-300 
-             z-40 shadow-lg"
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <button
-            onClick={nextImage}
-            className="absolute right-5 top-1/2 -translate-y-1/2 
-             bg-white/40 dark:bg-white/15 backdrop-blur-md 
-             text-foreground p-2 rounded-full 
-             hover:bg-white/60 dark:hover:bg-white/25 
-             hover:scale-110 transition-all duration-300 
-             z-40 shadow-lg"
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </>
-      )}
-
-      {/*My Progress Dots */}
-      {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-40">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentImageIndex
-                  ? "bg-primary w-8"
-                  : "bg-white/60 w-2 hover:bg-white/90"
-              }`}
-              aria-label={`Go to image ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <img
+          src={encodeURI(project.image)}
+          alt={`Screenshot of the ${project.title} website`}
+          width="1024"
+          height="768"
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+        />
+      </div>
+    </Wrapper>
   );
 };
 
-const projects = [
-  {
-    images: [
-      "/projects/Project 1.jpg",
-      "/projects/Project 2.jpg",
-      "/projects/Project 3.jpg",
-    ],
-  },
-];
+const ProjectCard = ({ project, index }) => {
+  const number = String(index + 1).padStart(2, "0");
+  const isReversed = index % 2 === 1;
+
+  return (
+    <Reveal as="article">
+      <SpotlightCard
+        className="group grid grid-cols-1 gap-6 p-3 sm:p-4 lg:grid-cols-12 lg:items-center lg:gap-10"
+      >
+        <div className={cn("min-w-0 lg:col-span-7", isReversed && "lg:order-2")}>
+          <ProjectPreview project={project} />
+        </div>
+
+        <div
+          className={cn(
+            "min-w-0 px-3 pb-5 sm:px-4 lg:col-span-5 lg:py-6",
+            isReversed ? "lg:order-1 lg:pl-8" : "lg:pr-8"
+          )}
+        >
+          <div className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="text-primary">{number}</span>
+            <span aria-hidden="true">/</span>
+            <span>{project.category}</span>
+            {project.status && (
+              <span className="ml-auto inline-flex items-center gap-2 text-primary">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse-dot" />
+                {project.status}
+              </span>
+            )}
+          </div>
+
+          <h3 className="mt-5 text-2xl font-semibold tracking-tight sm:text-3xl">
+            {project.title}
+          </h3>
+          <p className="mt-4 leading-relaxed text-muted-foreground">
+            {project.description}
+          </p>
+
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Technologies used">
+            {project.tech.map((tech) => (
+              <li key={tech} className="chip">
+                {tech}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+              >
+                Live site
+                <ArrowUpRight className="btn-arrow btn-arrow-diagonal h-4 w-4" />
+                <span className="sr-only">for {project.title} (opens in a new tab)</span>
+              </a>
+            )}
+            {project.codeUrl && (
+              <a
+                href={project.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                <Github className="h-4 w-4" />
+                Source code
+                <span className="sr-only">for {project.title} (opens in a new tab)</span>
+              </a>
+            )}
+            {!project.liveUrl && !project.codeUrl && (
+              <p className="chip">Screenshot preview</p>
+            )}
+          </div>
+        </div>
+      </SpotlightCard>
+    </Reveal>
+  );
+};
 
 export const ProjectSection = () => {
   return (
-    <section
-      id="projects"
-      className="py-10 md:py-24 px-4 relative bg-secondary/30"
-    >
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl md:text-4xl font-bold text-center md:mb-12">
-          My <span className="text-primary">Projects</span>
-        </h2>
+    <section id="projects" className="relative py-24 md:py-32">
+      <div className="shell">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            index="04"
+            label="Projects"
+            title="Selected work."
+            description="Websites I've designed and built, from e-commerce to education."
+          />
+          <Reveal delay={150} className="shrink-0">
+            <a
+              href="https://github.com/fiyinpris"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              <Github className="h-4 w-4" />
+              More on GitHub
+              <ArrowUpRight className="btn-arrow btn-arrow-diagonal h-4 w-4" />
+            </a>
+          </Reveal>
+        </div>
 
-        <div className="grid grid-cols-1 gap-12">
+        <div className="mt-14 space-y-8 md:space-y-10">
           {projects.map((project, index) => (
-            <ProjectCarousel key={index} images={project.images} />
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </div>

@@ -1,12 +1,70 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my_portfolio</title>
+
+    <title>Olaleke Fiyinfoluwa Priscilla — Frontend &amp; Backend Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of Olaleke Fiyinfoluwa Priscilla, a frontend and backend developer in Nigeria building responsive, user-friendly interfaces with React, JavaScript and Tailwind CSS."
+    />
+    <meta name="author" content="Olaleke Fiyinfoluwa Priscilla" />
+    <link rel="canonical" href="https://my-portfolio-website-lemon-rho.vercel.app/" />
+
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://my-portfolio-website-lemon-rho.vercel.app/" />
+    <meta property="og:title" content="Priscilla — Frontend &amp; Backend Developer" />
+    <meta
+      property="og:description"
+      content="I turn ideas into engaging digital experiences with React, JavaScript and Tailwind CSS."
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <meta name="theme-color" content="#07090c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f9fb" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap"
+    />
+
+    <!-- Apply the saved theme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Olaleke Fiyinfoluwa Priscilla",
+        "jobTitle": "Frontend and Backend Developer",
+        "email": "mailto:fiyinolaleke@gmail.com",
+        "url": "https://my-portfolio-website-lemon-rho.vercel.app/",
+        "address": { "@type": "PostalAddress", "addressCountry": "NG" },
+        "knowsLanguage": ["English", "French"],
+        "sameAs": [
+          "https://github.com/fiyinpris",
+          "https://www.linkedin.com/in/olaleke-fiyin-453528291",
+          "https://www.instagram.com/_f_pris"
+        ]
+      }
+    </script>
   </head>
   <body>
+    <noscript>This portfolio needs JavaScript to display.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
