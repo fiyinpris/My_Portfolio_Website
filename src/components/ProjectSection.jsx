@@ -35,12 +35,12 @@ const ProjectPreview = ({ project }) => {
         </span>
         <span aria-hidden="true" className="w-[42px]" />
       </div>
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[16/10] overflow-hidden">
         <img
-          src={encodeURI(project.image)}
+          src={project.image}
           alt={`Screenshot of the ${project.title} website`}
-          width="1024"
-          height="768"
+          width="1440"
+          height="900"
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
@@ -140,7 +140,7 @@ export const ProjectSection = () => {
             index="04"
             label="Projects"
             title="Selected work."
-            description="Websites I've designed and built, from e-commerce to education."
+            description="Live websites I've designed and built, from marketplaces to luxury brands and online stores."
           />
           <Reveal delay={150} className="shrink-0">
             <a

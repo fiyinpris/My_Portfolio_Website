@@ -1,4 +1,4 @@
-import { ArrowRight, Download, FolderGit2, MapPin } from "lucide-react";
+import { ArrowUpRight, Download, FolderGit2, MapPin } from "lucide-react";
 import { experience, profile } from "../data/portfolio";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -74,6 +74,8 @@ export const ExperienceSection = () => {
                   {job.keyProject && (
                     <a
                       href={job.keyProject.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group mt-7 flex items-start gap-4 rounded-2xl border border-border bg-muted/40 p-4 transition-colors duration-300 hover:border-primary/40"
                     >
                       <span className="hidden h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary sm:grid">
@@ -88,7 +90,8 @@ export const ExperienceSection = () => {
                           {job.keyProject.summary}
                         </span>
                       </span>
-                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
+                      <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                      <span className="sr-only">(opens the live site in a new tab)</span>
                     </a>
                   )}
 
